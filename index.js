@@ -27,6 +27,15 @@ app.get("/", function (req, res) {
   res.send("Hello world!");
 });
 
+app.get("/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.send(products);
+  } catch (err) {
+    res.status(500).send("Error fetching products");
+  }
+});
+
 app.get("/products/:id/:field", async (req, res) => {
   try {
     // products/identifiers
@@ -53,9 +62,7 @@ app.get("/products/:id/:field", async (req, res) => {
       }
     }
 
-    // products
-    const products = await Product.find();
-    res.send(products);
+    res.status(404).send("Id or field not found");
   } catch (err) {
     res.status(500).send("Error fetching product");
   }
