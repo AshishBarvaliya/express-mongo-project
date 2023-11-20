@@ -27,6 +27,7 @@ app.get("/", function (req, res) {
   res.send("Hello world!");
 });
 
+// products
 app.get("/products", async (req, res) => {
   try {
     const products = await Product.find();
@@ -36,6 +37,7 @@ app.get("/products", async (req, res) => {
   }
 });
 
+// products/:id
 app.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id }).exec();
@@ -59,17 +61,11 @@ app.get("/products/:id/:field", async (req, res) => {
       return res.sendFile(`images/${req.params.field}`, { root: __dirname });
     }
 
-    // products/:id
-    if (req.params.id) {
+    // products/:id/field
+    if (req.params.id && req.params.field) {
       const product = await Product.findOne({ _id: req.params.id }).exec();
       if (!product) return res.status(404).send("Product not found");
-
-      // products/:id/field
-      if (req.params.field) {
-        return res.send({ [req.params.field]: product[req.params.field] });
-      } else {
-        return res.send(product);
-      }
+      return res.send({ [req.params.field]: product[req.params.field] });
     }
     res.status(404).send("Id or field not found");
   } catch (err) {
