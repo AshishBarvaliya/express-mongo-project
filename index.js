@@ -16,7 +16,7 @@ var productSchema = mongoose.Schema({
   image: String,
   description: String,
 });
-var Product = mongoose.model("Product", productSchema);
+var Product = mongoose.model("ProductCatalog", productSchema);
 
 mongoose
   .connect("mongodb://localhost/ProductCatalog")
