@@ -6,7 +6,7 @@ var app = express();
 app.use(express.json());
 
 var productSchema = mongoose.Schema({
-  id: Number,
+  _id: Number,
   name: String,
   price: Number,
   color: String,
@@ -19,7 +19,7 @@ var productSchema = mongoose.Schema({
 var Product = mongoose.model("Product", productSchema);
 
 mongoose
-  .connect("mongodb://localhost/Products")
+  .connect("mongodb://localhost/ProductCatalog")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB...", err));
 
