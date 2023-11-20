@@ -16,10 +16,10 @@ var productSchema = mongoose.Schema({
   image: String,
   description: String,
 });
-var Product = mongoose.model("ProductCatalog", productSchema);
+var Product = mongoose.model("Product", productSchema);
 
 mongoose
-  .connect("mongodb://localhost/ProductCatalog")
+  .connect("mongodb://localhost/Products")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB...", err));
 
@@ -38,7 +38,7 @@ app.get("/products", async (req, res) => {
 
 app.get("/products/:id", async (req, res) => {
   try {
-    const product = await Product.findOne({ id: req.params.id }).exec();
+    const product = await Product.findOne({ _id: req.params.id }).exec();
     if (!product) return res.status(404).send("Product not found");
     res.send(product);
   } catch (err) {
@@ -51,7 +51,7 @@ app.get("/products/:id/:field", async (req, res) => {
     // products/identifiers
     if (req.params.id === "identifiers") {
       const products = await Product.find();
-      return res.send(products.map((e) => ({ id: e.id })));
+      return res.send(products.map((e) => ({ _id: e._id })));
     }
 
     // products/images/{filename}
@@ -61,7 +61,7 @@ app.get("/products/:id/:field", async (req, res) => {
 
     // products/:id
     if (req.params.id) {
-      const product = await Product.findOne({ id: req.params.id }).exec();
+      const product = await Product.findOne({ _id: req.params.id }).exec();
       if (!product) return res.status(404).send("Product not found");
 
       // products/:id/field
