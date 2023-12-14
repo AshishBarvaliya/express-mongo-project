@@ -50,6 +50,30 @@ app.get("/products/:id", async (req, res) => {
   }
 });
 
+// products update by id
+app.put("/products/:id", async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      upsert: true,
+    });
+    res.send(product);
+  } catch (err) {
+    res.status(500).send("Error updating product");
+  }
+});
+
+// products delete by id
+app.delete("/products/:id", async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) return res.status(404).send("Product not found");
+    res.send("Product deleted");
+  } catch (err) {
+    res.status(500).send("Error deleting product");
+  }
+});
+
 app.get("/products/:id/:field", async (req, res) => {
   try {
     // products/identifiers
@@ -72,6 +96,34 @@ app.get("/products/:id/:field", async (req, res) => {
     res.status(404).send("Id or field not found");
   } catch (err) {
     res.status(500).send("Error fetching product");
+  }
+});
+
+// products update field by id
+app.patch("/products/:id/:field", async (req, res) => {
+  try {
+    const update = { [req.params.field]: req.body.value };
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $set: update },
+      { new: true }
+    );
+    if (!product) return res.status(404).send("Product not found");
+    res.send(product);
+  } catch (err) {
+    res.status(500).send("Error updating product");
+  }
+});
+
+// products/page/:skip/:limit
+app.get("/products/page/:skip/:limit", async (req, res) => {
+  try {
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const products = await Product.find().skip(skip).limit(limit);
+    res.send(products);
+  } catch (err) {
+    res.status(500).send("Error fetching products");
   }
 });
 
