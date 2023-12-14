@@ -1,8 +1,10 @@
 var express = require("express");
 var mongoose = require("mongoose");
 let path = require("path");
+var cors = require("cors");
 
 var app = express();
+app.use(cors());
 app.use(express.json());
 
 var productSchema = mongoose.Schema({
