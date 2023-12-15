@@ -17,12 +17,16 @@ This README document provides instructions on how to set up and use a Node.js Ex
 3.  **Clone/Download the Project**: Clone or download the project to your local machine.
 4.  **Install Dependencies**: Navigate to your project directory in the terminal and run the following command to install the necessary Node modules:
 
-    `npm install express mongoose cors`
+    ```javascript
+    npm install express mongoose cors
+    ```
 
-5.  **Start MongoDB**: Ensure your MongoDB server is running.
-6.  **Start the Application**: Run the following command in the terminal:
+6.  **Start MongoDB**: Ensure your MongoDB server is running.
+7.  **Start the Application**: Run the following command in the terminal:
 
-    `node <your-script-name>.js`
+    ```javascript
+    node <your-script-name>.js
+    ```
 
 ## API Endpoints
 
@@ -48,13 +52,19 @@ This README document provides instructions on how to set up and use a Node.js Ex
 
 Fetches a simple greeting message.
 
-`fetch('/')   .then(response => response.text())   .then(data => console.log(data)); // Logs "Hello world!"`
+```javascript
+    fetch('/').then(response => response.text())
+        .then(data => console.log(data)); // Logs "Hello world!"
+```
 
 ### 2\. GET `/products` (Fetch All Products)
 
 Fetches all products from the database.
 
-`fetch('/products')   .then(response => response.json())   .then(products => console.log(products)); // Logs all products`
+```javascript
+    fetch('/products').then(response => response.json()).
+        then(products => console.log(products)); // Logs all products
+```
 
 ### 3\. GET `/products/:id` (Fetch Product by ID)
 
@@ -66,31 +76,63 @@ Fetches a single product by its ID.
 
 Updates a product's information by its ID.
 
-`fetch('/products/1', { // Replace 1 with the product ID   method: 'PUT',   headers: {     'Content-Type': 'application/json',   },   body: JSON.stringify({     name: 'Updated Product Name',     price: 200,     // Other fields to update   }), }) .then(response => response.json()) .then(updatedProduct => console.log(updatedProduct)); // Logs the updated product`
+```javascript 
+    fetch('/products/1', { // Replace 1 with the product ID
+        method: 'PUT',
+        headers: {     'Content-Type': 'application/json',   },
+        body: JSON.stringify({
+                    name: 'Updated Product Name',
+                    price: 200,
+                    // Other fields to update
+                    }),
+        }).then(response => response.json())
+        .then(updatedProduct => console.log(updatedProduct)); // Logs the updated product
+```
 
 ### 5\. DELETE `/products/:id` (Delete Product by ID)
 
 Deletes a product by its ID.
 
-`fetch('/products/1', { // Replace 1 with the product ID to delete   method: 'DELETE', }) .then(response => response.text()) .then(result => console.log(result)); // Logs confirmation of deletion`
+```javascript 
+    fetch('/products/1', { // Replace 1 with the product ID to delete
+     method: 'DELETE', }) .then(response => response.text())
+    .then(result => console.log(result)); // Logs confirmation of deletion
+```
 
 ### 6\. GET `/products/:id/:field` (Fetch Specific Field of a Product)
 
 Fetches a specific field of a product by its ID.
 
-`fetch('/products/1/name') // Replace 1 with product ID, and 'name' with the desired field   .then(response => response.json())   .then(fieldData => console.log(fieldData)); // Logs the specific field data`
+```javascript
+    fetch('/products/1/name') // Replace 1 with product ID, and 'name' with the desired field
+    .then(response => response.json())
+    .then(fieldData => console.log(fieldData)); // Logs the specific field data
+```
 
 ### 7\. PATCH `/products/:id/:field` (Update Specific Field of a Product)
 
 Updates a specific field of a product by its ID.
 
-`fetch('/products/1/price', { // Replace 1 with product ID, and 'price' with the field to update   method: 'PATCH',   headers: {     'Content-Type': 'application/json',   },   body: JSON.stringify({ value: 300 }), // Set the new value for the field }) .then(response => response.json()) .then(updatedProduct => console.log(updatedProduct)); // Logs the updated product`
+```javascript 
+    fetch('/products/1/price', { // Replace 1 with product ID, and 'price' with the field to update
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ value: 300 }), // Set the new value for the field
+    }).then(response => response.json()) 
+    .then(updatedProduct => console.log(updatedProduct)); // Logs the updated product
+```
 
 ### 8\. GET `/products/page/:skip/:limit` (Paginated Fetch of Products)
 
 Fetches products with pagination, based on skip and limit parameters.
 
-`fetch('/products/page/0/10') // Fetches the first 10 products   .then(response => response.json())   .then(products => console.log(products)); // Logs the fetched products`
+```javascript 
+    fetch('/products/page/0/10') // Fetches the first 10 products
+    .then(response => response.json())
+    .then(products => console.log(products)); // Logs the fetched products
+```
 
 ## Notes
 
